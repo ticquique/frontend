@@ -1,0 +1,46 @@
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="login" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="login">{{'login' | translate}}</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #loginForm="ngForm" (submit)='submit($event)'>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="form-group">
+                            <label for="email">{{'email or username' | translate}}</label>
+                            <input type="text" class="form-control" id="email" name="email" [(ngModel)]="model.username" [placeholder]="translatePipe.transform('enter email or username')"
+                                required #email="ngModel">
+                            <div [hidden]="email.valid || email.pristine" class="p-2 alert-danger">
+                                <small> {{'invalid email' | translate}} </small>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">{{'password' | translate}}</label>
+                            <input type="password" [(ngModel)]="model.password" name="password" class="form-control" id="password" [placeholder]="translatePipe.transform('password')"
+                                required #password="ngModel">
+                        </div>
+                        <div class="formAlert alert alert-danger alert-dismissible fade show" role="alert">
+                            {{formResult?.message}}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" [(ngModel)]="rememberLog" name="rememberLog" id="rememberLog"  class="custom-control-input">
+                            <label class="custom-control-label" for="rememberLog">{{'remember' | translate}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{'close' | translate}}</button>
+                    <button type="submit" [disabled]="!loginForm.form.valid" class="btn btn-video-home">{{'login' | translate}}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

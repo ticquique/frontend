@@ -1,0 +1,32 @@
+.visited{
+    background-color: #ccc;
+}
+
+.chat-image-container {
+    width: 30px;
+}
+
+.message-text {
+    font-size: 13px;
+    max-width: 220px;
+}
+
+
+.dropdown-chat {
+  width: 260px;
+  left: 100px;
+  transform: translateX(-100%);
+}
+
+.form-group .icon {
+  position: relative;
+  float: right;
+  margin-top: calc(-1rem - 40px);
+  transform: translateY(50%);
+  z-index: 2;
+  color: #222222;
+}
+
+.c-user-photo img{
+  width: 22px;
+}

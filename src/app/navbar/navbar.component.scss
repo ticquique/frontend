@@ -1,0 +1,106 @@
+@import './../../styles/variables';
+.c-header-logo {
+    max-width: 110px;
+    @media only screen and (min-width: 575px) {
+        max-width: 150px;
+    }
+}
+
+.suffix-fa {
+    position: absolute;
+    right: 0%;
+    top: 10px;
+    font-size: 8px;
+    padding: .6em;
+    border-radius: 999px;
+    line-height: .75em;
+    color: white;
+    background: rgba(255, 0, 0, .85);
+    text-align: center;
+    min-width: 1.5em;
+}
+
+.c-nav-item a:not(.no-upfont) {
+    position: relative;
+    font-size: 19px;
+}
+
+.c-user-photo {
+    display: block;
+    height: 24px;
+    width: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.profile {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+}
+
+.profile-photo {
+    display: inline-block;
+    height: 24px;
+    width: 24px;
+    overflow: hidden;
+}
+
+.o-search-results {
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    max-width: 450px;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, 1);
+    box-shadow: $shadow-2;
+    a {
+        text-decoration: none;
+        color: black;
+    }
+    .c-user-profile {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        padding: 4px 10px;
+        &:hover {
+            background-color: #ECEFF7;
+        }
+    }
+    .c-user-name {
+        padding-left: 10px;
+        font-size: 14px;
+    }
+}
+
+.form-group,
+.form-inline {
+    position: relative;
+    .suffix {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #b3b3b3;
+        cursor: pointer;
+        transition: opacity .4s cubic-bezier(0.47, 0, 0.745, 0.715);
+    }
+}
+
+.c-search-input {
+    max-width: 450px;
+    background-color: white;
+    transition: box-shadow $mf-transition-speed ease-in;
+    &:focus {
+        @include shadow-2($pupleDark);
+        outline: none;
+    }
+}
+
+.o-search-container {
+    @media only screen and (max-width: 575px) {
+        width: 0;
+        height: 0;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,71 @@
+<ng-container *ngIf="this.conversationList; else noConversations">
+  <div (mouseleave)="hideNewMessage();" (mouseenter)="stopTimer()" class="dropdown-menu dropdown-menu-center dropdown-chat p-0 py-0"
+    #dropChat>
+    <div class="card">
+      <div class="card-header">
+        <button type="button" (click)="newConversationToggler()" style="opacity: .5;" class="border-0 btn btn-primary btn-sm btn-block">
+          new chat</button>
+      </div>
+      <div class="card-body">
+        <ng-container *ngIf="newConversation || this.conversationList.length === 0; else listConversations">
+          <form [formGroup]="newChat" (submit)="newChat.valid && newUsers.length > 0 && submit()">
+            <div class="form-group newconversation-username">
+              <div class="users-container container">
+                <div class="row">
+                  <div *ngFor="let user of newUsers" class="col-6 formAlert alert alert-info alert-dismissible fade show m-0 userAlert pt-1 pb-1 pl-1 pr-3 mb-3"
+                    role="alert">
+                    {{user.username}}
+                    <button type="button" class="close userAlertClose p-1" data-dismiss="alert" aria-label="Close" (click)="deleteNewUser(user)">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <input type="text" class="form-control" formControlName="username" name="username" (blur)="blurSearch()" (focus)="focusSearch()"
+                autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" placeholder="Username" (keyup)="searcher($event)">
+              <div class="o-search-results btn-group-vertical w-100" *ngIf="this.listUsersSearch  && this.listUsersSearch.length > 0 && this.focused">
+                <ng-container *ngFor="let user of this.listUsersSearch">
+                  <button class="btn btn-block btn-primary btn-sm text-left" (click)="newChatUser(user)">
+                    <div class="c-user-container">
+                      <div class="c-user-profile">
+                        <span class="c-user-photo">
+                          <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
+                        </span>
+                        <span class="c-user-name">{{user.username}}</span>
+                      </div>
+                    </div>
+                  </button>
+                </ng-container>
+              </div>
+            </div>
+            <div class="form-group newconversation-message">
+              <input type="text" class="form-control" formControlName="message" name="message" placeholder="Message" required>
+              <button class="btn icon fas fa-paper-plane" tabindex="0"></button>
+            </div>
+          </form>
+        </ng-container>
+        <ng-template #listConversations>
+          <button *ngFor="let conversation of this.conversationList" (click)="viewConversation(conversation.id)" class="dropdown-item btn p-1"
+            [ngClass]="{'visited': isViewed(conversation)}">
+            <div class="media">
+              <div class="chat-image-container align-self-center mr-2 ml-1">
+                <img class="rounded-circle img-fluid" [src]="getUser(conversation.participants).profile.picture" [alt]="getUser(conversation.participants).username">
+              </div>
+              <div class="media-body">
+                <h6 class="mt-1">{{getUser(conversation.participants).username}}
+                  <small class="float-right mt-1">{{conversation.lastMessage.createdAt | myTimeAgo}}</small>
+                </h6>
+                <p class="text-truncate message-text mb-1">{{conversation.lastMessage.body}}</p>
+              </div>
+            </div>
+          </button>
+        </ng-template>
+      </div>
+      <!-- <div class="card-footer text-muted p-1">
+      Footer
+    </div> -->
+    </div>
+  </div>
+</ng-container>
+<ng-template #noConversations>
+</ng-template>

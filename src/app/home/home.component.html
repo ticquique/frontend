@@ -1,0 +1,49 @@
+<main [@welcomeTrigger]='state'>
+    <div class="row no-gutters">
+        <div class="col-12 o-video-container justify-content-center">
+            <div class="o-video-home">
+                <video *ngIf="currentWindowWidth >= 992" poster='assets/video/home/homeart992.jpg' preload="metadata" autobuffer="true" muted autoplay loop playsinline class="c-video-home w-100"
+                    id="bgvid">
+                    <source src="assets/video/home/homeart.webm" type="video/webm" />{{ 'actualice el navegador' | translate }}
+                    <source src="assets/video/home/homeart.mp4" type="video/mp4" />{{ 'actualice el navegador' | translate }}
+                </video>
+                <img *ngIf="currentWindowWidth < 992 && currentWindowWidth > 760" src="assets/video/home/homeart992.jpg" class="c-image-home"
+                    alt="Homeart image">
+                <img *ngIf="currentWindowWidth <= 760 && currentWindowWidth > 360" src="assets/video/home/homeart760.jpg" class="c-image-home"
+                    alt="Homeart image">
+                <img *ngIf="currentWindowWidth <= 360" src="assets/video/home/homeart360.jpg" class="c-image-home" alt="Homeart image">
+                <div class="c-video-filter"></div>
+            </div>
+            <div class="row align-items-center h-100">
+                <div class="col-12 col-sm-8 col-md-7 col-lg-6 container-jumbo-video mx-auto">
+                    <div class="jumbotron o-video-description">
+                        <h1 class="text-center text-lg-left c-title-description">{{title}}</h1>
+                        <hr class="my-4">
+                        <p class="lead text-center text-lg-left c-video-description">{{'bienvenido' | translate}}</p>
+                        <hr class="my-4">
+                        <div class="row justify-content-between flex-column flex-lg-row">
+                            <p class="lead col-8 col-lg-4 mx-auto">
+                                <button class="btn btn-video-home btn-block p-2" data-toggle="modal" data-target="#registerModal" role="button">{{'registrarse' | translate}}</button>
+                            </p>
+                            <p class="lead col-8 col-lg-4 mx-auto">
+                                <button class="btn btn-video-home btn-block p-2" data-toggle="modal" data-target="#loginModal" role="button">{{'login' | translate}}</button>
+                            </p>
+                            <p class="lead col-8 col-lg-4 mx-auto">
+                                <a style="text-decoration: none" [routerLink]="[ '/' ]">
+                                    <button class="btn btn-video-home btn-block p-2" role="button">{{'entrar' | translate}}</button>
+                                </a>
+                            </p>
+                        </div>
+                        <div class="row justify-content-around">
+                            <div class="col-8 col-lg-12">
+                                <a class="recover-link" href="a">
+                                    <small>{{'recover password' | translate}}</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

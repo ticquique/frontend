@@ -1,0 +1,16 @@
+@import './../../../styles/variables';
+.welcome-container {
+  height: calc(100% - 63px);
+  top: 63px;
+  z-index: -1;
+  overflow: auto;
+  padding: 20px;
+  @media only screen and (min-width: 575) {
+    height: calc(100% - 78px);
+    top: 78px;
+  }
+  @media only screen and (min-height: 530px) {
+    padding-top: 0;
+    align-items: center !important;
+  }
+}

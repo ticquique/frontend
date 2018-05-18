@@ -1,0 +1,55 @@
+<div class="bottom-chat-container" class="position-fixed w-100 d-flex flex-column flex-sm-row align-items-end justify-content-end"
+    style="bottom: 0" *ngIf="user">
+
+    <ng-container *ngFor="let conversation of messageViewing; let i=index">
+        <ng-container *ngIf="i < 2">
+            <div class="visible-chat card col-12 col-sm-6 col-md-5 col-lg-4 mx-0 px-0 order-2" (click)="viewNotification(conversation.id, 'messages')">
+                <div class="card-header text-left px-2 py-2 position-relative chat-header" data-toggle="collapse" [attr.data-target]="'#' + conversation.id"
+                    aria-expanded="true" [attr.aria-controls]="'#' + conversation.id">
+                    <h6 class="card-title mb-0">
+                        <a class="undecorated" [routerLink]="[ '/profile', getUser(conversation.participants).username ]">
+                            {{getUser(conversation.participants).username}} </a>
+                    </h6>
+                    <small class="d-block position-absolute close-chat" (click)="removeConversation(conversation.id)">
+                        <i class="fas fa-times" aria-hidden="true"></i>
+                    </small>
+                </div>
+                <div [id]="conversation.id" class="collapse show">
+                    <div class="card-body px-2 py-1" #chatLists>
+                        <div class="my-1 px-2 py-1 media message-container" [ngClass]="{'mine': message.author.id === user.id, 'yours': message.author.id !== user.id}"
+                            *ngFor="let message of conversation.listMessages.reverse()">
+                            <img class="mr-2 align-self-center rounded-circle message-photo" [alt]="message?.author?.username" *ngIf="message.author.id !== user.id"
+                                [src]="message?.author?.profile?.picture">
+                            <div class="media-body">
+                                <p class="my-0 message-body">{{message.body}}</p>
+                                <small class="text-muted">{{message.createdAt| myTimeAgo}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <div class="form-group m-0">
+                            <input type="text" class="form-control" (keyup.enter)="sendMessage($event, conversation.id)" spellcheck="false" autocomplete="false">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+
+    <div class="d-flex flex-column align-items-end w-100" *ngIf="messageViewing.length > 2">
+        <div class="collapse list-group collapsed-chats" id="minifiedMessages">
+            <ng-container *ngFor="let conversation of messageViewing; let i=index">
+                <button type="button" (click)="viewConversation(conversation.id)" class="list-group-item btn list-group-item-action p-1 m-0"
+                    *ngIf="i >= 2">
+                    {{getUser(conversation.participants).username}}
+                </button>
+            </ng-container>
+        </div>
+        <button class="btn p-0 order-1 button-collapsed" data-toggle="collapse" data-target="#minifiedMessages" aria-controls="minifiedMessages"
+            aria-expanded="false">
+            <span class="badge badge-primary">
+                <i class="fas fa-envelope fa-fw"></i>
+            </span>
+        </button>
+    </div>
+</div>

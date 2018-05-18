@@ -1,0 +1,69 @@
+@import './../../../styles/variables';
+.chat-header {
+    cursor: pointer;
+    background: rgba(89, 29, 255, 0.39);
+    color: white;
+}
+
+.close-chat {
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.message-body {
+    font-size: 14px;
+}
+
+.card-body {
+    height: 300px;
+    max-height: calc(100vh - 135px);
+    overflow-y: auto;
+}
+
+.message-photo {
+    max-width: 40px;
+}
+
+.mine {
+    display: block;
+    float: right;
+    background-color: rgba(0, 0, 255, 0.199);
+    border-radius: 10px;
+    text-align: right;
+    clear: both;
+}
+
+.yours {
+    width: calc(100% - 20px);
+    background-color: rgba(0, 0, 0, .1);
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.undecorated {
+    text-decoration: none;
+    color: inherit;
+}
+
+.button-collapsed {
+    font-size: 20px;
+    width: 100%;
+    @include media-breakpoint-up(sm) {
+        width: 50px;
+        font-size: 25px;
+    }
+}
+
+.collapsed-chats {
+    width: 100%;
+    @include media-breakpoint-up(sm) {
+        max-width: 220px;
+    }
+}
+
+.visible-chat {
+    @include media-breakpoint-up(sm) {
+        max-width: 400px;
+    }
+}

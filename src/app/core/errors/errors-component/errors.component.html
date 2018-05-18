@@ -1,0 +1,21 @@
+<div class="error-container">
+
+    <div class="container" *ngIf="routeParams?.error">
+        <div class="col-10 offset-2 error-container">
+            <div class="card">
+                <div class="card-header">
+                    <h1>ERROR {{ routeParams?.error?.name }}</h1>
+                </div>
+                <div class="card-body">
+                    <p class="card-text">{{ routeParams?.error }}</p>
+                </div>
+                <div class="card-footer text-muted">
+                    <a class="btn btn-secondary" mat-raised-button [routerLink]="'/'">
+                        <h5>Go to Home</h5>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
