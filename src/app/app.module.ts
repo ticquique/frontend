@@ -12,6 +12,7 @@ import { FeedModule } from './feed/feed.module';
 import { HomeComponent } from './home/home.component';
 import { ChatFooterComponent } from './navbar/chat/chat-footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SettingsComponent } from './settings/settings.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     ChatNavbarComponent,
     AppComponent,
     HomeComponent,
-    ChatFooterComponent
+    ChatFooterComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

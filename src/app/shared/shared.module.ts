@@ -17,6 +17,8 @@ import { NotificationService } from "./services/notification.service";
 import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { ImageEditorComponent } from "./components/image-editor/image-editor.component";
+import { ImageUploadService } from "./services/image-upload.service";
 
 @NgModule({
     imports: [
@@ -29,6 +31,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
         LoaderComponent,
         LoginComponent,
         RegisterComponent,
+        ImageEditorComponent,
         TimeAgoPipe
     ],
     exports: [
@@ -40,7 +43,8 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
         LoginComponent,
         RegisterComponent,
         TimeAgoPipe,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ImageEditorComponent
     ],
     providers: [
         TranslationService,
@@ -53,6 +57,7 @@ import { FormsModule, ReactiveFormsModule} from '@angular/forms';
         ChatService,
         TimeAgoPipe,
         NotificationService,
+        ImageUploadService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,

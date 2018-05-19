@@ -1,176 +1,180 @@
 <header [@welcomeTrigger]="state">
-    <ng-container *ngIf="isHome; else notHome">
-        <nav class="navbar navbar-expand navbar-light bg-light">
-            <div class="nav navbar-nav">
-                <a class="navbar-brand nav-logo active" [routerLink]="[ '/' ]">
-                    <img class="c-header-logo" [alt]="'logo de inarts' | translate" src="assets/img/logo/definitivo.png">
-                    <h1 class="sr-only">{{title}}</h1>
-                </a>
-            </div>
-        </nav>
-    </ng-container>
-    <ng-template #notHome>
-        <nav class="navbar navbar-expand navbar-light bg-light" (focusout)="onUnfocus()" *ngIf="this.currentWindowWidth <= 575 && this.displaySearch">
-            <div class="nav navbar-nav w-100">
-                <li class="nav-item c-nav-item">
-                    <a class="btn mr-2 nav-link" (click)="this.displaySearch = false">
-                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                        <p class="sr-only">{{'return' | translate}}</p>
-                    </a>
-                </li>
-                <form class="form-group d-flex my-auto my-lg-0 flex-grow-1 o-search-small">
-                    <input class="form-control my-auto  border-0 c-search-input" autocorrect="off" autocapitalize="off" spellcheck="false" (keyup)="searcher($event)"
-                        (focus)="this.focused = true" autocomplete="off" type="text" [(ngModel)]="search" name='search' [placeholder]="this.translationService.translate('search')"
-                        required/>
-                    <div class="o-search-results" *ngIf="this.listUsersSearch  && this.listUsersSearch.length > 0 && this.focused">
-                        <ng-container *ngFor="let user of this.listUsersSearch">
-                            <a [routerLink]="['/profile/' + user.username]" routerLinkActive="router-link-active">
-                                <div class="c-user-container">
-                                    <div class="c-user-profile">
+  <ng-container *ngIf="isHome; else notHome">
+    <nav class="navbar navbar-expand navbar-light bg-light">
+      <div class="nav navbar-nav">
+        <a class="navbar-brand nav-logo active" [routerLink]="[ '/' ]">
+          <img class="c-header-logo" [alt]="'logo de inarts' | translate" src="assets/img/logo/definitivo.png">
+          <h1 class="sr-only">{{title}}</h1>
+        </a>
+      </div>
+    </nav>
+  </ng-container>
+  <ng-template #notHome>
+    <nav class="navbar navbar-expand navbar-light bg-light" (focusout)="onUnfocus()" *ngIf="this.currentWindowWidth <= 575 && this.displaySearch">
+      <div class="nav navbar-nav w-100">
+        <li class="nav-item c-nav-item">
+          <a class="btn mr-2 nav-link" (click)="this.displaySearch = false">
+            <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            <p class="sr-only">{{'return' | translate}}</p>
+          </a>
+        </li>
+        <form class="form-group d-flex my-auto my-lg-0 flex-grow-1 o-search-small">
+          <input class="form-control my-auto  border-0 c-search-input" autocorrect="off" autocapitalize="off" spellcheck="false" (keyup)="searcher($event)"
+            (focus)="this.focused = true" autocomplete="off" type="text" [(ngModel)]="search" name='search' [placeholder]="this.translationService.translate('search')"
+            required/>
+          <div class="o-search-results" *ngIf="this.listUsersSearch  && this.listUsersSearch.length > 0 && this.focused">
+            <ng-container *ngFor="let user of this.listUsersSearch">
+              <a [routerLink]="['/profile/' + user.username]" routerLinkActive="router-link-active">
+                <div class="c-user-container">
+                  <div class="c-user-profile">
 
-                                        <span class="c-user-photo">
-                                            <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
-                                        </span>
-                                        <span class="c-user-name">{{user.username}}</span>
-                                    </div>
-                                </div>
-                            </a>
-                        </ng-container>
-                    </div>
-                </form>
-                <li class="nav-item c-nav-item">
-                    <a class="btn nav-link ml-2" (click)="this.searcher()">
-                        <i class="fas fa-play" aria-hidden="true"></i>
-                        <p class="sr-only">{{'search' | translate}}</p>
-                    </a>
-                </li>
-            </div>
-        </nav>
-        <nav class="navbar navbar-expand navbar-light bg-light" *ngIf="this.currentWindowWidth > 575 || (this.currentWindowWidth <= 575 && !this.displaySearch)">
-            <a class="navbar-brand nav-logo active" [routerLink]="[ '/' ]">
-                <img class="c-header-logo" [alt]="'logo de inarts' | translate" src="assets/img/logo/definitivo.png">
-                <h1 class="sr-only">{{title}}</h1>
-            </a>
-            <form class="form-group d-flex my-auto my-lg-0 flex-grow-1 o-search-container" (focusout)="onUnfocus()" *ngIf="this.currentWindowWidth > 575">
-                <input class="form-control my-auto  border-0 c-search-input" (keyup)="searcher($event)" (focus)="this.focused = true" [(ngModel)]="search"
-                    name='search' autocomplete="off" type="text" [placeholder]="translationService.translate('search')" autocorrect="off"
-                    autocapitalize="off" spellcheck="false">
-                <div class="o-search-results" *ngIf="this.listUsersSearch  && this.listUsersSearch.length > 0 && this.focused">
-                    <ng-container *ngFor="let user of this.listUsersSearch">
-                        <a [routerLink]="['/profile/' + user.username]" routerLinkActive="router-link-active">
-                            <div class="c-user-container">
-                                <div class="c-user-profile">
-                                    <span class="c-user-photo">
-                                        <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
-                                    </span>
-                                    <span class="c-user-name">{{user.username}}</span>
-                                </div>
-                            </div>
-                        </a>
-                    </ng-container>
+                    <span class="c-user-photo">
+                      <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
+                    </span>
+                    <span class="c-user-name">{{user.username}}</span>
+                  </div>
                 </div>
-            </form>
-            <div class="flex-grow-0 ml-auto">
-                <ul class="navbar-nav my-auto mt-lg-0">
-                    <li class="nav-item c-nav-item" (click)="this.displaySearch = !this.displaySearch" *ngIf="this.currentWindowWidth <= 575">
-                        <a class="nav-link btn">
-                            <i class="fas fa-search fa-fw"></i>
-                            <span class="sr-only">{{'search' | translate}}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item c-nav-item" [routerLink]="['/profile']" routerLinkActive="active" *ngIf="this.currentWindowWidth <= 875">
-                        <ng-container *ngIf="user; else noUserProfile">
-                            <a class="nav-link btn">
-                                <span class="profile-photo d-inline-block">
-                                    <img [src]="this.user.profile.picture" [alt]="this.user.username" class="img-fluid">
-                                </span>
-                                <span class="sr-only">{{user.username}}</span>
-                            </a>
-                        </ng-container>
-                        <ng-template #noUserProfile>
-                            <a class="nav-link btn" [ngClass]="{'disabled': !user}">
-                                <span class="profile-photo d-inline-block">
-                                    <img src="https://gravatar.com/avatar/?s=200&d=retro" alt="notLogged" class="img-fluid">
-                                </span>
-                            </a>
-                        </ng-template>
-                    </li>
-                    <li class="nav-item c-nav-item" *ngIf="this.currentWindowWidth > 875">
-                        <ng-container *ngIf="user; else noUserProfile">
-                            <a class="nav-link btn profile" [routerLink]="['/profile']" routerLinkActive="active">
-                                <span class="profile-photo d-inline-block mr-1">
-                                    <img [src]="this.user.profile.picture" [alt]="this.user.username" class="img-fluid">
-                                </span>
-                                <span class="c-profileName align-text-bottom font-weight-bold">{{this.user.username | titlecase }}</span>
-                            </a>
-                        </ng-container>
-                        <ng-template #noUserProfile>
-                            <a class="nav-link btn" [ngClass]="{'disabled': !user}">
-                                <span class="c-user-photo">
-                                    <img src="https://gravatar.com/avatar/?s=200&d=retro" alt="notLogged" class="img-fluid">
-                                </span>
-                            </a>
-                        </ng-template>
-                    </li>
-                    <li class="nav-item c-nav-item" *ngIf="user">
-                        <a class="nav-link btn" (click)="reset('subscriptions');reset('comments');reset('reactions')">
-                            <i class="fas fa-bell fa-fw" aria-hidden="true"></i>
-                            <span class="suffix-fa" *ngIf="subscriptions.length > 0 || comments.length > 0 || reactions.length > 0">
-                                {{subscriptions.length + reactions.length + comments.length}}
-                                <span class="sr-only">Messages to read</span>
-                            </span>
-                            <span class="sr-only">{{'notifications' | translate}}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item c-nav-item dropdown justify-content-center" *ngIf="user">
-                        <a class="nav-link btn" id="chatDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
-                            <span class="suffix-fa" *ngIf="messages.length > 0">
-                                {{messages.length}}
-                                <span class="sr-only">Messages to read</span>
-                            </span>
-                            <span class="sr-only">{{'messages' | translate}}</span>
-                        </a>
-                            <chat-navbar [unreaded]="messages"></chat-navbar>
-                    </li>
-                    <li class="nav-item dropdown c-nav-item">
-                        <a class="nav-link btn" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-globe fa-fw" aria-hidden="true"></i>
-                            <span class="sr-only">{{'languaje' | translate}}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langDropDown">
-                            <h6 class="dropdown-header">{{'languaje' | translate}}</h6>
-                            <button *ngFor="let languaje of this.languajes" class="dropdown-item" (click)="this.changeLang(languaje)">{{languaje | translate}}</button>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown c-nav-item" *ngIf="user">
-                        <a class="nav-link btn" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-cog fa-fw" aria-hidden="true"></i>
-                            <span class="sr-only">{{'settings' | translate}}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
-                            <h6 class="dropdown-header">{{'settings' | translate}}</h6>
-                            <a class="btn dropdown-item no-upfont" (click)="logOut()">
-                                <i class="fas fa-ban fa-fw" aria-hidden="true"></i>
-                                {{'logout' | translate}}
-                            </a>
-                        </div>
-                    </li>
-                    <li class="nav-item c-nav-item" *ngIf="!user">
-                        <a class="nav-link btn" data-toggle="modal" data-target="#registerModal" role="button">
-                            <i class="fas fa-user-plus fa-fw" aria-hidden="true"></i>
-                            <span class="sr-only">{{'registrarse' | translate}}</span>
-                        </a>
-                    </li>
-                    <li class="nav-item c-nav-item" *ngIf="!user">
-                        <a class="nav-link btn" data-toggle="modal" data-target="#loginModal" role="button">
-                            <i class="fas fa-sign-in-alt fa-fw" aria-hidden="true"></i>
-                            <span class="sr-only">{{'login' | translate}}</span>
-                        </a>
-                    </li>
-                </ul>
+              </a>
+            </ng-container>
+          </div>
+        </form>
+        <li class="nav-item c-nav-item">
+          <a class="btn nav-link ml-2" (click)="this.searcher()">
+            <i class="fas fa-play" aria-hidden="true"></i>
+            <p class="sr-only">{{'search' | translate}}</p>
+          </a>
+        </li>
+      </div>
+    </nav>
+    <nav class="navbar navbar-expand navbar-light bg-light" *ngIf="this.currentWindowWidth > 575 || (this.currentWindowWidth <= 575 && !this.displaySearch)">
+      <a class="navbar-brand nav-logo active" [routerLink]="[ '/' ]">
+        <img class="c-header-logo" [alt]="'logo de inarts' | translate" src="assets/img/logo/definitivo.png">
+        <h1 class="sr-only">{{title}}</h1>
+      </a>
+      <form class="form-group d-flex my-auto my-lg-0 flex-grow-1 o-search-container" (focusout)="onUnfocus()" *ngIf="this.currentWindowWidth > 575">
+        <input class="form-control my-auto  border-0 c-search-input" (keyup)="searcher($event)" (focus)="this.focused = true" [(ngModel)]="search"
+          name='search' autocomplete="off" type="text" [placeholder]="translationService.translate('search')" autocorrect="off"
+          autocapitalize="off" spellcheck="false">
+        <div class="o-search-results" *ngIf="this.listUsersSearch  && this.listUsersSearch.length > 0 && this.focused">
+          <ng-container *ngFor="let user of this.listUsersSearch">
+            <a [routerLink]="['/profile/' + user.username]" routerLinkActive="router-link-active">
+              <div class="c-user-container">
+                <div class="c-user-profile">
+                  <span class="c-user-photo">
+                    <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
+                  </span>
+                  <span class="c-user-name">{{user.username}}</span>
+                </div>
+              </div>
+            </a>
+          </ng-container>
+        </div>
+      </form>
+      <div class="flex-grow-0 ml-auto">
+        <ul class="navbar-nav my-auto mt-lg-0">
+          <li class="nav-item c-nav-item" (click)="this.displaySearch = !this.displaySearch" *ngIf="this.currentWindowWidth <= 575">
+            <a class="nav-link btn">
+              <i class="fas fa-search fa-fw"></i>
+              <span class="sr-only">{{'search' | translate}}</span>
+            </a>
+          </li>
+          <li class="nav-item c-nav-item" [routerLink]="['/profile']" routerLinkActive="active" *ngIf="this.currentWindowWidth <= 875">
+            <ng-container *ngIf="user; else noUserProfile">
+              <a class="nav-link btn d-flex">
+                <span class="profile-photo d-inline-block">
+                  <img [src]="this.user.profile.picture" [alt]="this.user.username" class="img-thumbnail rounded-circle">
+                </span>
+                <span class="sr-only">{{user.username}}</span>
+              </a>
+            </ng-container>
+            <ng-template #noUserProfile>
+              <a class="nav-link btn" [ngClass]="{'disabled': !user}">
+                <span class="profile-photo d-inline-block">
+                  <img src="https://gravatar.com/avatar/?s=200&d=retro" alt="notLogged" class="img-thumbnail rounded-circle">
+                </span>
+              </a>
+            </ng-template>
+          </li>
+          <li class="nav-item c-nav-item" *ngIf="this.currentWindowWidth > 875">
+            <ng-container *ngIf="user; else noUserProfile">
+              <a class="nav-link btn profile d-flex" [routerLink]="['/profile']" routerLinkActive="active">
+                <span class="profile-photo d-inline-block mr-1">
+                  <img [src]="this.user.profile.picture" [alt]="this.user.username" class="img-thumbnail rounded-circle">
+                </span>
+                <span class="c-profileName align-text-bottom font-weight-bold">{{this.user.username | titlecase }}</span>
+              </a>
+            </ng-container>
+            <ng-template #noUserProfile>
+              <a class="nav-link btn" [ngClass]="{'disabled': !user}">
+                <span class="c-user-photo">
+                  <img src="https://gravatar.com/avatar/?s=200&d=retro" alt="notLogged" class="img-thumbnail rounded-circle">
+                </span>
+              </a>
+            </ng-template>
+          </li>
+          <li class="nav-item c-nav-item" *ngIf="user">
+            <a class="nav-link btn" (click)="reset('subscriptions');reset('comments');reset('reactions')">
+              <i class="fas fa-bell fa-fw" aria-hidden="true"></i>
+              <span class="suffix-fa" *ngIf="subscriptions.length > 0 || comments.length > 0 || reactions.length > 0">
+                {{subscriptions.length + reactions.length + comments.length}}
+                <span class="sr-only">Messages to read</span>
+              </span>
+              <span class="sr-only">{{'notifications' | translate}}</span>
+            </a>
+          </li>
+          <li class="nav-item c-nav-item dropdown justify-content-center" *ngIf="user">
+            <a class="nav-link btn" id="chatDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+              <span class="suffix-fa" *ngIf="messages.length > 0">
+                {{messages.length}}
+                <span class="sr-only">Messages to read</span>
+              </span>
+              <span class="sr-only">{{'messages' | translate}}</span>
+            </a>
+            <chat-navbar [unreaded]="messages"></chat-navbar>
+          </li>
+          <li class="nav-item dropdown c-nav-item">
+            <a class="nav-link btn" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-globe fa-fw" aria-hidden="true"></i>
+              <span class="sr-only">{{'languaje' | translate}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="langDropDown">
+              <h6 class="dropdown-header">{{'languaje' | translate}}</h6>
+              <button *ngFor="let languaje of this.languajes" class="dropdown-item" (click)="this.changeLang(languaje)">{{languaje | translate}}</button>
             </div>
-        </nav>
-        <chat-footer [unreaded]="messages"></chat-footer>
-    </ng-template>
+          </li>
+          <li class="nav-item dropdown c-nav-item" *ngIf="user">
+            <a class="nav-link btn" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-cog fa-fw" aria-hidden="true"></i>
+              <span class="sr-only">{{'settings' | translate}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="settingsDropdown">
+              <h6 class="dropdown-header">{{'settings' | translate}}</h6>
+              <a [routerLink]="['/settings']" class="btn dropdown-item no-upfont">
+                <i class="fas fa-cog fa-fw" aria-hidden="true"></i>
+                {{'settings' | translate}}
+              </a>
+              <a class="btn dropdown-item no-upfont" (click)="logOut()">
+                <i class="fas fa-ban fa-fw" aria-hidden="true"></i>
+                {{'logout' | translate}}
+              </a>
+            </div>
+          </li>
+          <li class="nav-item c-nav-item" *ngIf="!user">
+            <a class="nav-link btn" data-toggle="modal" data-target="#registerModal" role="button">
+              <i class="fas fa-user-plus fa-fw" aria-hidden="true"></i>
+              <span class="sr-only">{{'registrarse' | translate}}</span>
+            </a>
+          </li>
+          <li class="nav-item c-nav-item" *ngIf="!user">
+            <a class="nav-link btn" data-toggle="modal" data-target="#loginModal" role="button">
+              <i class="fas fa-sign-in-alt fa-fw" aria-hidden="true"></i>
+              <span class="sr-only">{{'login' | translate}}</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <chat-footer [unreaded]="messages"></chat-footer>
+  </ng-template>
 </header>

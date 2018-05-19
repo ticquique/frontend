@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IUser, IFind, INotification, IReaction } from '../../../interfaces';
 import { environment } from '../../../environments/environment';
+import { first } from 'rxjs/operators';
 
 @Injectable()
 export class NotificationService {
@@ -118,7 +119,7 @@ export class NotificationService {
   }
 
   private onConnect = () => {
-    this.getNotification({ view: true, actionFilter: 'notified-false', populate: 'actions' }).subscribe(val => {
+    this.getNotification({ view: true, actionFilter: 'notified-false', populate: 'actions' }).pipe(first()).subscribe(val => {
       if (val && val.length) {
         console.log(val[0]);
         this.notifications.next(val[0]);

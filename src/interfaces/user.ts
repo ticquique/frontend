@@ -11,6 +11,7 @@ export interface IUser {
     privileges?: 'Member' | 'Client' | 'Owner' | 'Admin';
     profile?: {
         picture?: string,
+        profilePicture?: string,
         city?: string,
         country?: string,
         birth_date?: Date,
@@ -21,6 +22,7 @@ export interface IUser {
         facebook?: string,
         twitter?: string,
         google?: string,
+        stripe?: string
     };
     points?: {
         numLikes?: number,

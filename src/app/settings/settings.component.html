@@ -1,0 +1,16 @@
+<main *ngIf="user">
+  <div class="profileHeader">
+    <img *ngIf="user.profile.profilePicture" [src]="user.profile.profilePicture" class="fullsize-profile" [alt]="user.username">
+    <button class="btn btn-primary change-profilePicture">
+      {{'change profile' | translate}}
+      <span class="badge badge-primary"></span>
+    </button>
+  </div>
+  <div class="container">
+    <img [src]="user.profile.picture" class="profile-image img-thumbnail rounded-circle" alt=""> {{user.role}} {{user.email}} {{user.username}} {{user.password}} {{user.privacy}} {{user.profile.city}} {{user.profile.country}}
+    {{user.profile.birth_date}} {{user.profile.gender}} {{user.profile.phone}} {{user.profile.hobbies}} {{user.profile.website}}
+    {{user.profile.facebook}} {{user.profile.twitter}} {{user.profile.google}} {{user.profile.stripe}}
+  </div>
+  <input type="file" (change)="onChange($event)" />
+  <image-editor></image-editor>
+</main>
