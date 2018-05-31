@@ -1,4 +1,4 @@
-<div [@alertStatus]='state' *ngIf="show" class="welcome-container bg-primary w-100 position-absolute d-flex justify-content-center align-items-start">
+<div [@alertStatus]='state' *ngIf="show" class="welcome-container bg-primary w-100 position-absolute d-flex justify-content-center align-items-start" (click)="reset($event)">
 
   <form class="welcome-form" [formGroup]="welcomeForm" (submit)="welcomeForm.valid && submit()">
     <div class="card">

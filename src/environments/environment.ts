@@ -52,8 +52,20 @@ export const environment = {production: false,
       createChat: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}subscription/`,
     },
     post: {
+      getPost: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}post/`,
       createPost: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}post/`,
-      getPosts: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}post/`
+    },
+    feed: {
+      getPosts: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}feed/`,
+      getPrevious: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}feed/prev/`
+    },
+    reaction: {
+      getReaction: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}reaction/`,
+      react: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}reaction/`,
+    },
+    comment: {
+      getComment: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}comment/`,
+      newComment: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}comment/`,
     },
     notification: {
       getNotification: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}notification/`,

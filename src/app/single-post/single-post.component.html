@@ -1,0 +1,111 @@
+<div class="container-fluid post-container shadow-sm" *ngIf="this.post" [@welcomeTrigger]='state'>
+  <div class="row p-0 m-0">
+    <div class="col-12 col-md-7 p-0 m-0">
+      <div class="row p-2 align-items-center justify-content-center bg-dark m-0">
+        <div class="col-12 p-0 d-flex align-items-center justify-content-center attachment-container">
+          <div id="postCarousel" class="carousel slide carousel-fade" data-ride="carousel" *ngIf="post.attachments.length > 1">
+            <div class="carousel-inner">
+              <ng-container *ngFor="let attachment of post.attachments; let i = index">
+                <div class="carousel-item" [ngClass]="{'active': i === 0}">
+                  <a [href]="attachment.urls.orig">
+                    <img class="d-block w-100" [src]="attachment.urls.medium" [alt]="attachment.urls.orig" *ngIf="attachment.type === 'photo'">
+                    <img class="d-block w-100" src="assets/img/external/word.svg" [alt]="attachment.urls.orig" *ngIf="attachment.type !== 'photo'">
+                  </a>
+                </div>
+              </ng-container>
+            </div>
+            <a class="carousel-control-prev" href="#postCarousel" role="button" data-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#postCarousel" role="button" data-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
+          </div>
+          <div class="single-image-container" *ngIf="post.attachments.length === 1">
+            <a [href]="post.attachments[0].urls.orig">
+              <img class="d-block w-100" [src]="post.attachments[0].urls.medium" [alt]="post.attachments[0].urls.orig" *ngIf="post.attachments[0].type === 'photo'">
+              <img class="d-block w-100" src="assets/img/external/word.svg" [alt]="post.attachments[0].urls.orig" *ngIf="post.attachments[0].type !== 'photo'">
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-10 offset-1 d-flex align-items-center">
+          <div class="author-picture-container">
+            <a [routerLink]="[ '/profile', post.author.username ]">
+              <img [src]="post.author.profile.picture.small" class="img-thumbnail rounded-circle" [alt]="post.author.profile.picture.orig">
+            </a>
+          </div>
+          <div class="author-info-container">
+            <a [routerLink]="[ '/profile', post.author.username ]">
+              <h5>{{post.author.username}}</h5>
+            </a>
+            <button type="button" class="btn btn-dark" *ngIf="!post.author.profile.stripe && user.id !== post.author.id">Subscribe</button>
+            <div class="btn-group" role="group" *ngIf="post.author.profile.stripe && user.id !== post.author.id">
+              <button type="button" class="btn btn-light">Donate</button>
+              <button type="button" class="btn btn-dark">Subscribe</button>
+            </div>
+          </div>
+          <div class="post-reactions fa-2x ml-auto">
+
+            <span class="fa-layers fa-fw reaction-icons" [class.inverse]="selfReaction && selfReaction.type === 'like'" tabindex="0" (keydown.enter)="react(post.id, 'like')"
+              (click)="react(post.id, 'like')">
+              <i class="fas fa-circle reaction-inner-wrapper"></i>
+              <i class="far fa-thumbs-up reaction-inner-icon" data-fa-transform="shrink-6"></i>
+              <span class="fa-layers-counter reaction-inner-counter" *ngIf="post.reactions?.like">{{post.reactions?.like}}</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-10 offset-1 col-md-4 p-0 mt-5">
+      <div class="row">
+        <div class="col-12 post-tabs-container">
+          <ul class="nav nav-tabs post-tabs" id="post-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="comments-tab" data-toggle="tab" href="#comments" role="tab" aria-controls="comments" aria-selected="true">Comments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" id="reactions-tab" data-toggle="tab" href="#reactions" role="tab" aria-controls="reactions" aria-selected="false">Reactions</a>
+            </li>
+          </ul>
+          <div class="tab-content" id="post-tabs-content">
+            <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="comments-tab">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius saepe, rem sint nihil, inventore eligendi unde aperiam officiis
+              deserunt ipsam quae esse, voluptatibus itaque ex quia facilis. Pariatur, illum fugit!Repellat odit tenetur
+              harum laborum eligendi tempore totam natus facilis et molestiae, fuga esse labore nihil cumque cupiditate,
+              eaque enim alias ut optio adipisci, aliquid corrupti at inventore veniam. Debitis.
+            </div>
+            <div class="tab-pane fade" id="reactions" role="tabpanel" aria-labelledby="reactions-tab">
+              <ul class="list-unstyled" *ngFor="let reaction of reactions">
+                <li class="media">
+                  <a class="reaction-profile-image" [routerLink]="[ '/profile', reaction.user.username ]">
+                    <img class="img-fluid" [src]="reaction.user.profile.picture.low" [alt]="reaction.user.username">
+                  </a>
+                  <div class="media-body reaction-type d-flex justify-content-around align-items-center">
+                    <a class="reaction-profile-image" [routerLink]="[ '/profile', reaction.user.username ]">
+                      <h6>{{reaction.user.username}}</h6>
+                    </a>
+                    <i class="far fa-thumbs-up reaction-type-icon" *ngIf="reaction.type === 'like'"></i>
+                    <i class="far fa-thumbs-down reaction-type-icon" *ngIf="reaction.type === 'dislike'"></i>
+                    <i class="far fa-hear reaction-type-icon" *ngIf="reaction.type === 'love'"></i>
+                    <i class="far fa-smile reaction-type-icon" *ngIf="reaction.type === 'fun'"></i>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="container">
+  {{post | json}}
+  <div>
+    {{reactions | json}}
+  </div>
+
+</div> -->

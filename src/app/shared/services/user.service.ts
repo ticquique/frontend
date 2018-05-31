@@ -34,8 +34,12 @@ export class UserService {
     });
   }
 
+  public updateUser = (data): Observable<IUser> => {
+    return this.httpClient.patch<IUser>(`${environment.api.user.updatePassword}`, data);
+  }
+
   public updatePassword = (data): Observable<IUser> => {
-    return this.httpClient.put<IUser>(`${environment.api.user.updatePassword}`, data);
+    return this.httpClient.put<IUser>(`${environment.api.user.updatePassword}`, data, {headers: this.headers});
   }
 
   public getUser = (find?: IFind): Observable<IUser[]> => {

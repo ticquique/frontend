@@ -1,6 +1,7 @@
 <app-navbar></app-navbar>
 <router-outlet>
-    <inarts-loader *ngIf="showLoader"></inarts-loader>
+    <inarts-loader></inarts-loader>
 </router-outlet>
 <register-form></register-form>
 <login-form></login-form>
+<image-editor *ngIf="showImageUploader.length && showUploader" (close)="showUploader = false"></image-editor>

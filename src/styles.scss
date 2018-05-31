@@ -5,6 +5,37 @@
     src: url('assets/fonts/brushed.woff') format('woff'), url('assets/fonts/brushed.ttf') format('truetype');
 }
 
+
+::-webkit-scrollbar
+{
+    width: 10px;
+    max-width: 10px;
+    height: auto;
+    max-height: 8px;
+}
+::-webkit-scrollbar-thumb
+{
+    background: #f0f0f0;
+    border-radius: 5px;
+    max-width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: map-get($theme-colors, primary);
+    border-radius:5px;
+}
+
+body {
+  background-color: rgba(240,240,240, 1);
+}
+
+.form-control:focus {
+  box-shadow: 0 0 0 0.03rem rgba(89, 29, 255, 0.25);
+}
+
+a , a:hover{
+  text-decoration: none;
+}
+
 // FORMS
 input {
     transition: border-left .2s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -27,4 +58,9 @@ input {
         background-color: rgba(lighten($pupleDark, 30), .93);
         @include shadow-6(#ffffff);
     }
+}
+
+.content-container {
+  position: relative;
+  margin-top: 70px;
 }

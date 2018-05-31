@@ -1,5 +1,6 @@
 .profileHeader {
   position: relative;
+  overflow: hidden;
   top: -50%;
   left: -50%;
   width: 200%;
@@ -18,11 +19,10 @@
   right: 0;
   bottom: 0;
   margin: auto;
-  min-width: 50%;
-  min-height: 50%;
+  width: 50%;
 }
 
-.change-profilePicture {
+.change-user-picture {
   position: absolute;
   bottom: 20px;
   right: calc(25% + 20px);

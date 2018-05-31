@@ -1,0 +1,32 @@
+<div class="row form-newPost-container" [@welcomeTrigger]="state" *ngIf="user">
+  <div class="col-10 offset-1 form-newPost">
+    <div class="row mb-2">
+      <div class="col-10">
+        <div class="fake-textarea" [ngClass]="{'focused': showNewPost}" (focus)="showNewPost = true" (blur)="toggleNewPost()" contenteditable="true"
+          aria-autocomplete="list" spellcheck="true" role="textbox" aria-multiline="true" data-placeholder-default="Describe your post"
+          #postText> </div>
+      </div>
+      <div class="col-2 d-flex justify-content-center">
+        <label class="post-addoms d-inline-block mr-2" role="button" tabindex="0">
+          <span class="fas fa-paperclip"></span>
+          <input (change)="onChange($event)" type="file" class="custom-file-input d-none">
+        </label>
+        <label class="post-addoms d-inline-block" role="button" (click)="createPost()" tabindex="0">
+          <span class="fas fa-paper-plane"></span>
+        </label>
+      </div>
+    </div>
+    <div class="row mb-2">
+      <div class="col-12">
+        <div class="file-container-preview">
+          <ng-container *ngFor="let file of filesPost">
+            <span *ngIf="file.type === 'image'" class="image filePreview" (click)="removeFile($event, file)">
+              <img [src]="file.src" class="img-fluid" alt=""> </span>
+            <span *ngIf="file.type === 'pdf'" class="far fa-file-pdf filePreview" (click)="removeFile($event, file)"></span>
+            <span *ngIf="file.type === 'word'" class="far fa-file-word filePreview" (click)="removeFile($event, file)"></span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

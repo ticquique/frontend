@@ -1,3 +1,8 @@
-<div class="crop-container">
-  <img class="crop-image" hidden="true" [src]="imgSrc" #image>
+<div [@welcomeTrigger]='show' *ngIf="show" (click)="reset($event)" class="cropper-component-container d-flex align-items-center justify-content-center flex-column position-fixed">
+  <div class="crop-wrapper bg-light position-relative">
+    <div class="crop-container">
+      <img class="crop-image" hidden="true" [src]="photo.src" #image>
+    </div>
+    <button (click)="submit()">enviar todo</button>
+  </div>
 </div>

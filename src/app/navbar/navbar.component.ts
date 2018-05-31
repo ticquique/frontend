@@ -112,4 +112,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
   }
 
+  click($event: Event) {
+    let target: HTMLInputElement = <HTMLInputElement>$event.target;
+    target.click();
+  }
+
 }

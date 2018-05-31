@@ -29,7 +29,7 @@
                     <div class="c-user-container">
                       <div class="c-user-profile">
                         <span class="c-user-photo">
-                          <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
+                          <img [src]="user?.profile?.picture?.small" class="img-fluid" alt=user.username>
                         </span>
                         <span class="c-user-name">{{user.username}}</span>
                       </div>
@@ -49,7 +49,7 @@
             [ngClass]="{'visited': isViewed(conversation)}">
             <div class="media">
               <div class="chat-image-container align-self-center mr-2 ml-1">
-                <img class="rounded-circle img-fluid" [src]="getUser(conversation.participants).profile.picture" [alt]="getUser(conversation.participants).username">
+                <img class="rounded-circle img-fluid" [src]="getUser(conversation.participants)?.profile?.picture?.small" [alt]="getUser(conversation.participants).username">
               </div>
               <div class="media-body">
                 <h6 class="mt-1">{{getUser(conversation.participants).username}}

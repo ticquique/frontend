@@ -3,7 +3,8 @@ import { trigger, style, animate, transition, state } from "@angular/animations"
 import { UserService } from "../shared/services/user.service";
 import { IUser } from "../../interfaces";
 import { Subject, BehaviorSubject } from "rxjs";
-import { ImageUploadService } from "../shared/services/image-upload.service";
+import { ImageUploadService } from "../shared/components/image-editor/image-upload.service";
+import { takeUntil } from "rxjs/operators";
 
 @Component({
   selector: 'app-settings',
@@ -14,13 +15,14 @@ import { ImageUploadService } from "../shared/services/image-upload.service";
     state('enter', style({ opacity: 1 })),
     state('void', style({ opacity: 0 })),
     state('exit', style({ opacity: 0 })),
-    transition('* => *', animate('800ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
+    transition('* => *', animate('1200ms cubic-bezier(0.25, 0.8, 0.25, 1)')),
   ]),
   ]
 })
 export class SettingsComponent implements OnInit, OnDestroy {
 
   user: IUser;
+  state: string;
   destroy$: Subject<boolean> = new Subject<boolean>();
 
   constructor(
@@ -34,7 +36,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userService.user.subscribe(user => this.user = user);
+    this.userService.user.pipe(takeUntil(this.destroy$)).subscribe(user => this.user = user);
+    this.state = 'enter';
   }
 
   onChange(event: EventTarget) {
@@ -46,7 +49,13 @@ export class SettingsComponent implements OnInit, OnDestroy {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onload = () => {
-        this.ImageUploadService.imgSrc.next(reader.result);
+        this.ImageUploadService.showImageEditor.next('profilePicture');
+        this.ImageUploadService.img.next({
+          src: reader.result,
+          name: file.name,
+          type: file.type,
+          file
+        });
       };
     }
   }

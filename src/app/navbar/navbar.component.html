@@ -1,6 +1,6 @@
 <header [@welcomeTrigger]="state">
   <ng-container *ngIf="isHome; else notHome">
-    <nav class="navbar navbar-expand navbar-light bg-light">
+    <nav class="main-navbar navbar navbar-expand navbar-light bg-light">
       <div class="nav navbar-nav">
         <a class="navbar-brand nav-logo active" [routerLink]="[ '/' ]">
           <img class="c-header-logo" [alt]="'logo de inarts' | translate" src="assets/img/logo/definitivo.png">
@@ -10,7 +10,7 @@
     </nav>
   </ng-container>
   <ng-template #notHome>
-    <nav class="navbar navbar-expand navbar-light bg-light" (focusout)="onUnfocus()" *ngIf="this.currentWindowWidth <= 575 && this.displaySearch">
+    <nav class="main-navbar navbar navbar-expand navbar-light bg-light" (focusout)="onUnfocus()" *ngIf="this.currentWindowWidth <= 575 && this.displaySearch">
       <div class="nav navbar-nav w-100">
         <li class="nav-item c-nav-item">
           <a class="btn mr-2 nav-link" (click)="this.displaySearch = false">
@@ -29,7 +29,7 @@
                   <div class="c-user-profile">
 
                     <span class="c-user-photo">
-                      <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
+                      <img [src]="user?.profile?.picture?.small" class="img-fluid" alt=user.username>
                     </span>
                     <span class="c-user-name">{{user.username}}</span>
                   </div>
@@ -46,7 +46,7 @@
         </li>
       </div>
     </nav>
-    <nav class="navbar navbar-expand navbar-light bg-light" *ngIf="this.currentWindowWidth > 575 || (this.currentWindowWidth <= 575 && !this.displaySearch)">
+    <nav class="main-navbar navbar navbar-expand navbar-light bg-light" *ngIf="this.currentWindowWidth > 575 || (this.currentWindowWidth <= 575 && !this.displaySearch)">
       <a class="navbar-brand nav-logo active" [routerLink]="[ '/' ]">
         <img class="c-header-logo" [alt]="'logo de inarts' | translate" src="assets/img/logo/definitivo.png">
         <h1 class="sr-only">{{title}}</h1>
@@ -61,7 +61,7 @@
               <div class="c-user-container">
                 <div class="c-user-profile">
                   <span class="c-user-photo">
-                    <img [src]="user.profile.picture" class="img-fluid" alt=user.username>
+                    <img [src]="user?.profile?.picture?.small" class="img-fluid" alt=user.username>
                   </span>
                   <span class="c-user-name">{{user.username}}</span>
                 </div>
@@ -82,7 +82,7 @@
             <ng-container *ngIf="user; else noUserProfile">
               <a class="nav-link btn d-flex">
                 <span class="profile-photo d-inline-block">
-                  <img [src]="this.user.profile.picture" [alt]="this.user.username" class="img-thumbnail rounded-circle">
+                  <img [src]="user?.profile?.picture?.small" [alt]="this.user.username" class="img-thumbnail rounded-circle">
                 </span>
                 <span class="sr-only">{{user.username}}</span>
               </a>
@@ -99,7 +99,7 @@
             <ng-container *ngIf="user; else noUserProfile">
               <a class="nav-link btn profile d-flex" [routerLink]="['/profile']" routerLinkActive="active">
                 <span class="profile-photo d-inline-block mr-1">
-                  <img [src]="this.user.profile.picture" [alt]="this.user.username" class="img-thumbnail rounded-circle">
+                  <img [src]="user?.profile?.picture?.small" [alt]="this.user.username" class="img-thumbnail rounded-circle">
                 </span>
                 <span class="c-profileName align-text-bottom font-weight-bold">{{this.user.username | titlecase }}</span>
               </a>
@@ -113,7 +113,7 @@
             </ng-template>
           </li>
           <li class="nav-item c-nav-item" *ngIf="user">
-            <a class="nav-link btn" (click)="reset('subscriptions');reset('comments');reset('reactions')">
+            <a class="nav-link btn" tabindex="0" (keyup.enter)="click($event)" (click)="reset('subscriptions');reset('comments');reset('reactions')">
               <i class="fas fa-bell fa-fw" aria-hidden="true"></i>
               <span class="suffix-fa" *ngIf="subscriptions.length > 0 || comments.length > 0 || reactions.length > 0">
                 {{subscriptions.length + reactions.length + comments.length}}
@@ -123,7 +123,7 @@
             </a>
           </li>
           <li class="nav-item c-nav-item dropdown justify-content-center" *ngIf="user">
-            <a class="nav-link btn" id="chatDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link btn" tabindex="0" (keyup.enter)="click($event)" id="chatDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
               <span class="suffix-fa" *ngIf="messages.length > 0">
                 {{messages.length}}
@@ -134,7 +134,7 @@
             <chat-navbar [unreaded]="messages"></chat-navbar>
           </li>
           <li class="nav-item dropdown c-nav-item">
-            <a class="nav-link btn" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link btn" tabindex="0" (keyup.enter)="click($event)" id="langDropDown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-globe fa-fw" aria-hidden="true"></i>
               <span class="sr-only">{{'languaje' | translate}}</span>
             </a>
@@ -144,7 +144,7 @@
             </div>
           </li>
           <li class="nav-item dropdown c-nav-item" *ngIf="user">
-            <a class="nav-link btn" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link btn" tabindex="0" (keyup.enter)="click($event)" id="settingsDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <i class="fas fa-cog fa-fw" aria-hidden="true"></i>
               <span class="sr-only">{{'settings' | translate}}</span>
             </a>
@@ -161,13 +161,13 @@
             </div>
           </li>
           <li class="nav-item c-nav-item" *ngIf="!user">
-            <a class="nav-link btn" data-toggle="modal" data-target="#registerModal" role="button">
+            <a class="nav-link btn" tabindex="0" (keyup.enter)="click($event)" data-toggle="modal" data-target="#registerModal" role="button">
               <i class="fas fa-user-plus fa-fw" aria-hidden="true"></i>
               <span class="sr-only">{{'registrarse' | translate}}</span>
             </a>
           </li>
           <li class="nav-item c-nav-item" *ngIf="!user">
-            <a class="nav-link btn" data-toggle="modal" data-target="#loginModal" role="button">
+            <a class="nav-link btn" tabindex="0" (keyup.enter)="click($event)" data-toggle="modal" data-target="#loginModal" role="button">
               <i class="fas fa-sign-in-alt fa-fw" aria-hidden="true"></i>
               <span class="sr-only">{{'login' | translate}}</span>
             </a>

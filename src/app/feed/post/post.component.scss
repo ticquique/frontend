@@ -1,0 +1,95 @@
+@import './../../../styles/variables';
+.reaction-icons {
+    cursor: pointer;
+    opacity: .6;
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    &:hover,
+    &:focus {
+        opacity: .9;
+    }
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}
+
+.reaction-inner-icon {
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    color: map-get($theme-colors, primary);
+}
+
+.reaction-inner-wrapper {
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    color: white;
+}
+
+.reaction-inner-counter {
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    background-color: map-get($theme-colors, primary);
+}
+
+.inverse {
+    .reaction-inner-icon {
+        color: white;
+    }
+    .reaction-inner-wrapper {
+        color: map-get($theme-colors, primary);
+    }
+    .reaction-inner-counter {
+        color: map-get($theme-colors, primary);
+        background-color: white;
+    }
+}
+
+.text-main {
+    color: map-get($theme-colors, primary);
+}
+
+.comment-input {
+    margin-top: 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    border-right: 0;
+    &:focus,
+    &:hover {
+        border: 1px solid rgba(0, 0, 0, .05);
+        border-right: 0;
+    }
+    &::-webkit-input-placeholder {
+        text-align: center;
+        color: map-get($theme-colors, primary);
+    }
+    &:-moz-placeholder {
+        /* Firefox 18- */
+        text-align: center;
+        color: map-get($theme-colors, primary);
+    }
+    &::-moz-placeholder {
+        /* Firefox 19+ */
+        text-align: center;
+        color: map-get($theme-colors, primary);
+    }
+    &:-ms-input-placeholder {
+        text-align: center;
+        color: map-get($theme-colors, primary);
+    }
+}
+
+.suffix {
+    margin-top: 15px;
+}
+
+.post-container {
+    background-color: rgba(0, 0, 0, .05);
+}
+
+.attachment-content {
+    transform: scale(.95);
+    transition: all 1.5s cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    &:hover {
+        transform: scale(1);
+    }
+}
+
+.book-container {
+  font-size: 100px;
+}

@@ -13,6 +13,10 @@ import { HomeComponent } from './home/home.component';
 import { ChatFooterComponent } from './navbar/chat/chat-footer.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SettingsComponent } from './settings/settings.component';
+import { ProfileComponent } from './profile/profile.component';
+import { CreatePostComponent } from './feed/create-post/create-post.component';
+import { PostComponent } from './feed/post/post.component';
+import { SinglePostComponent } from './single-post/single-post.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,9 @@ import { SettingsComponent } from './settings/settings.component';
     AppComponent,
     HomeComponent,
     ChatFooterComponent,
-    SettingsComponent
+    SettingsComponent,
+    ProfileComponent,
+    SinglePostComponent
   ],
   imports: [
     BrowserModule,

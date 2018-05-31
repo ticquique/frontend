@@ -6,6 +6,8 @@ import { SharedModule } from '../shared/shared.module';
 import { FeedComponent } from './feed.component';
 import { FeedRoutingModule } from './feed-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
+import { CreatePostComponent } from './create-post/create-post.component';
+import { PostComponent } from './post/post.component';
 
 @NgModule({
     imports: [
@@ -16,7 +18,9 @@ import { WelcomeComponent } from './welcome/welcome.component';
     ],
     declarations: [
         FeedComponent,
-        WelcomeComponent
+        WelcomeComponent,
+        CreatePostComponent,
+        PostComponent
     ],
     providers: []
 })

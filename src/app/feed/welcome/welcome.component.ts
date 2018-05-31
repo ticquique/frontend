@@ -56,6 +56,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   public reset(event: any): void {
+    if (event && event.target !== event.currentTarget) return;
     this.show = false;
     setTimeout(() => {
       this.router.navigate(['/']);

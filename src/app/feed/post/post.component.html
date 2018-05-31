@@ -1,0 +1,73 @@
+<div class="row p-3 mb-4 post-container shadow-sm" [@welcomeTrigger]="state" *ngIf="post">
+  <div class="col-12">
+    <div class="row">
+      <div class="col-1 p-0">
+        <ng-container *ngIf="action; else noActionPhoto">
+          <a [routerLink]="[ '/profile', action.user.username ]">
+            <img src="{{action.user.profile.picture.small}}" class="img-thumbnail rounded-circle" alt="{{action.user.username}}">
+          </a>
+        </ng-container>
+        <ng-template #noActionPhoto>
+          <a [routerLink]="[ '/profile', post.author.username ]">
+            <img src="{{post.author.profile.picture.small}}" class="img-thumbnail rounded-circle" alt="{{post.author.username}}">
+          </a>
+        </ng-template>
+      </div>
+      <div class="col-10">
+        <ng-container *ngIf="action; else noActionName">
+          <a [routerLink]="[ '/profile', action.user.username ]">
+            <h6 class="m-0 text-main">{{action.user.username | titlecase}}</h6>
+          </a>
+        </ng-container>
+        <ng-template #noActionName>
+          <a [routerLink]="[ '/profile', post.author.username ]">
+            <h6 class="m-0 text-main">{{post.author.username | titlecase}}</h6>
+          </a>
+        </ng-template>
+        <small class="text-muted ">{{post.createdAt | myTimeAgo}}</small>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-1 d-none fa-2x d-md-flex flex-column p-0 justify-content-end align-items-center text-main">
+        <span class="fa-layers fa-fw reaction-icons" tabindex="0">
+          <i class="fas fa-circle reaction-inner-wrapper"></i>
+          <i class="far fa-comment reaction-inner-icon" data-fa-transform="shrink-6"></i>
+        </span>
+        <span class="fa-layers fa-fw reaction-icons" [class.inverse]="reaction === 'dislike'" tabindex="0" (keydown.enter)="react(post.id, 'dislike')"
+          (click)="react(post.id, 'dislike')">
+          <i class="fas fa-circle reaction-inner-wrapper"></i>
+          <i class="far fa-thumbs-down reaction-inner-icon" data-fa-transform="shrink-6"></i>
+          <span class="fa-layers-counter reaction-inner-counter" *ngIf="post.reactions?.dislike">{{post.reactions?.dislike}}</span>
+        </span>
+        <span class="fa-layers fa-fw reaction-icons" [class.inverse]="reaction === 'like'" tabindex="0" (keydown.enter)="react(post.id, 'like')"
+          (click)="react(post.id, 'like')">
+          <i class="fas fa-circle reaction-inner-wrapper"></i>
+          <i class="far fa-thumbs-up reaction-inner-icon" data-fa-transform="shrink-6"></i>
+          <span class="fa-layers-counter reaction-inner-counter" *ngIf="post.reactions?.like">{{post.reactions?.like}}</span>
+        </span>
+      </div>
+      <div class="col-12 col-md-10">
+        <div *ngFor="let attachment of post.attachments">
+          <a [routerLink]="[ '/post', post.id ]" *ngIf="attachment.type === 'photo'">
+            <img src="{{attachment.urls.medium}}" class="img-fluid attachment-content" alt="">
+          </a>
+          <a [routerLink]="[ '/post', post.id ]" class="book-container" *ngIf="attachment.type === 'book'">
+            <i class="fas fa-file-word"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="action">
+      <div class="col-10 offset-1">
+        <div class="input-group position-relative">
+          <input type="text" spellcheck="true" autocomplete="off" class="form-control comment-input" placeholder="Inserta tu comentario">
+          <div class="input-group-append suffix">
+            <span class="input-group-text">
+              <i class="far fa-paper-plane" data-fa-transform="rotate-45"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

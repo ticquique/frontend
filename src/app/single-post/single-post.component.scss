@@ -1,0 +1,94 @@
+@import '../../styles/variables';
+.attachment-container {
+    min-height: calc(50vh);
+}
+
+.attachment-container {
+    max-width: 500px;
+}
+
+.post-container {
+    margin-top: 80px;
+    max-width: 900px;
+    padding-bottom: 20px;
+    @media only screen and (min-width: 800px) {
+        padding: 20px;
+    }
+}
+
+.author-picture-container {
+    max-width: 60px;
+    float: left;
+}
+
+.author-info-container {
+    margin-left: 20px;
+    h5 {
+        margin-left: 12px;
+    }
+}
+
+.post-tabs-container {
+    height: 370px;
+    overflow-y: auto;
+}
+
+.post-tabs {
+    @media only screen and (min-width: 800px) {
+        justify-content: center;
+    }
+}
+
+.reaction-profile-image {
+    max-width: 40px;
+}
+
+.reaction-type h6 {
+    line-height: 40px;
+}
+
+.reaction-type-icon {
+    font-size: 20px;
+    color: map-get($theme-colors, primary);
+}
+
+.reaction-icons {
+    cursor: pointer;
+    opacity: .6;
+    transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+    &:hover,
+    &:focus {
+        opacity: .9;
+    }
+    &:not(:last-child) {
+        margin-bottom: 20px;
+    }
+}
+
+.reaction-inner-icon {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+  color: map-get($theme-colors, primary);
+}
+
+.reaction-inner-wrapper {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+  color: white;
+}
+
+.reaction-inner-counter {
+  transition: all .6s cubic-bezier(0.19, 1, 0.22, 1);
+  background-color: map-get($theme-colors, primary);
+}
+
+.inverse {
+  .reaction-inner-icon {
+      color: white;
+  }
+  .reaction-inner-wrapper {
+      color: map-get($theme-colors, primary);
+  }
+  .reaction-inner-counter {
+      color: map-get($theme-colors, primary);
+      background-color: white;
+  }
+}

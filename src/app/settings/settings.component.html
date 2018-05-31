@@ -1,16 +1,16 @@
-<main *ngIf="user">
+<main *ngIf="user" [@welcomeTrigger]="state">
   <div class="profileHeader">
-    <img *ngIf="user.profile.profilePicture" [src]="user.profile.profilePicture" class="fullsize-profile" [alt]="user.username">
-    <button class="btn btn-primary change-profilePicture">
+    <img *ngIf="user.profile.profilePicture?.small" [src]="user.profile.profilePicture?.small" class="fullsize-profile" [alt]="user.username">
+    <button class="btn btn-primary change-user-picture" style="overflow: hidden; ">
+      <input type="file" name="picture" style="position: absolute; left: 0; top: 0; right:0; bottom: 0; opacity: 0; cursor: pointer" (change)="onChange($event)" />
       {{'change profile' | translate}}
       <span class="badge badge-primary"></span>
     </button>
   </div>
   <div class="container">
-    <img [src]="user.profile.picture" class="profile-image img-thumbnail rounded-circle" alt=""> {{user.role}} {{user.email}} {{user.username}} {{user.password}} {{user.privacy}} {{user.profile.city}} {{user.profile.country}}
+    <img [src]="user.profile.picture.medium" class="profile-image img-thumbnail rounded-circle" alt="">
+    {{user.role}} {{user.email}} {{user.username}} {{user.password}} {{user.privacy}} {{user.profile.city}} {{user.profile.country}}
     {{user.profile.birth_date}} {{user.profile.gender}} {{user.profile.phone}} {{user.profile.hobbies}} {{user.profile.website}}
     {{user.profile.facebook}} {{user.profile.twitter}} {{user.profile.google}} {{user.profile.stripe}}
   </div>
-  <input type="file" (change)="onChange($event)" />
-  <image-editor></image-editor>
 </main>

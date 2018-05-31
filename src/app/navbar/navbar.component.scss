@@ -1,11 +1,23 @@
 @import './../../styles/variables';
+
+.main-navbar {
+  z-index: 20;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
 .c-header-logo {
     max-width: 110px;
     @media only screen and (min-width: 575px) {
         max-width: 150px;
     }
 }
-
+header {
+  // position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 .suffix-fa {
     position: absolute;
     right: 0%;

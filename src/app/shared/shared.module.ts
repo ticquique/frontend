@@ -18,7 +18,9 @@ import { HTTP_INTERCEPTORS } from "@angular/common/http";
 import { AuthInterceptor } from "./interceptors/auth.interceptor";
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { ImageEditorComponent } from "./components/image-editor/image-editor.component";
-import { ImageUploadService } from "./services/image-upload.service";
+import { ImageUploadService } from "./components/image-editor/image-upload.service";
+import { FeedService } from "./services/feed.service";
+import { ReactionService } from "./services/reaction.service";
 
 @NgModule({
     imports: [
@@ -58,6 +60,8 @@ import { ImageUploadService } from "./services/image-upload.service";
         TimeAgoPipe,
         NotificationService,
         ImageUploadService,
+        FeedService,
+        ReactionService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
@@ -93,6 +97,8 @@ export class SharedModule {
                 ChatService,
                 TimeAgoPipe,
                 NotificationService,
+                FeedService,
+                ReactionService,
                 {
                     provide: BROWSER_FAVICONS_CONFIG,
                     useValue: {

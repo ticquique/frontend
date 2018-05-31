@@ -121,7 +121,6 @@ export class NotificationService {
   private onConnect = () => {
     this.getNotification({ view: true, actionFilter: 'notified-false', populate: 'actions' }).pipe(first()).subscribe(val => {
       if (val && val.length) {
-        console.log(val[0]);
         this.notifications.next(val[0]);
         val[0].actions.forEach(action => {
           this.addNotification(action);

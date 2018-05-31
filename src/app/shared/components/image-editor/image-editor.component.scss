@@ -1,8 +1,34 @@
-.crop-container {
-  width: 400px;
-  height: 400px;
+.cropper-component-container {
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color: #000000, $alpha: 0.7);
 }
 
-.crop-image {
+.crop-wrapper {
+  max-width: 100%;
+  padding: 20px;
+}
+
+
+.crop-container {
+  position: relative;
+  width: 640px;
+  margin-bottom: 1rem;
+  max-height: 497px;
+  min-height: 200px;
+  max-width: 100%;
+  margin: auto;
+}
+
+@media (min-width: 768px) {
+  .crop-container {
+    min-height: 497px;
+  }
+}
+
+img.crop-image {
   max-width: 100%;
 }

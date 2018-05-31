@@ -82,6 +82,28 @@ export class ChatService {
     this.socket.emit('newChat', { id: users, message: { body: message } });
   }
 
+  public viewMore(id: string, page: number): Promise<void> {
+    return new Promise((resolve, reject) => {
+      let index: number = null;
+      const conversation = this.conversationList.getValue().find(val => val.id === id);
+      const isActive = this.activeConversations.getValue().find((val, i) => {if (val.id === id) {index = i } return val.id === id});
+      if (isActive) {
+        this.getMessages({ resource: `conversation-${isActive.id}`, page, populate: 'author', perPage: 20, sort: '-createdAt' }).subscribe(
+          val => {
+            if (val && val.length) {
+              conversation.listMessages = conversation.listMessages.concat(val);
+              const aux = this.activeConversations.getValue();
+              aux[index] = conversation;
+              this.activeConversations.next(aux);
+              resolve();
+            } else { reject(); }
+          },
+          err => { reject(); }
+        );
+      } else { reject(); }
+    });
+  }
+
   public viewConversation(id: string): void {
     const conversation = this.conversationList.getValue().find(val => val.id === id);
     const isActive = this.activeConversations.getValue().find(val => val.id === id);
@@ -140,7 +162,6 @@ export class ChatService {
       this.conversationList.next(modified);
     } else {
       this.getChat({ resource: `_id-${message.conversation}`, populate: 'participants' }).subscribe(val => {
-        console.log(val);
         if (val.length) {
           val[0].lastMessage = message;
           val[0].listMessages = [message];

@@ -1,6 +1,8 @@
+import { IUser } from ".";
+
 export interface IAttachment {
     id?: string;
-    userId?: string;
+    userId?: string | IUser;
     relatedId?: string;
     urls?: {
         small?: string,

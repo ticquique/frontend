@@ -1,1 +1,23 @@
+<div class="container content-container" [@welcomeTrigger]='state'>
+  <div class="row">
+    <div class="col-md-8 feed shadow-sm">
+      <create-post *ngIf="user"></create-post>
+      <div class="row mt-3">
+        <div class="col-10 offset-1">
+          <ng-container *ngIf="feed; then withFeed; else withoutFeed"></ng-container>
+          <ng-template #withFeed>
+              <ng-container *ngFor="let action of feed.actions">
+                <single-post [action]="action" [post]="action.object" [user]="user"></single-post>
+              </ng-container>
+          </ng-template>
+          <ng-template #withoutFeed>
+              <ng-container *ngFor="let post of postList">
+                <single-post [post]="post" [user]="user"></single-post>
+              </ng-container>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 <welcome-form *ngIf="showWelcome" [@welcomeTrigger]='state'></welcome-form>
