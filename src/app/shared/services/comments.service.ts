@@ -18,10 +18,10 @@ export class CommentsService {
     userService.user.subscribe(user => this.user = user);
   }
 
-  public createComment(object: string, text: string, name: string): Promise<IComment> {
+  public createComment(object: string, text: string, name: string): Promise<any> {
     return new Promise<IComment>((resolve, reject) => {
       if (this.user) {
-        this.httpClient.post<IComment>(environment.api.comment.newComment, {object, text, name}).pipe(first()).subscribe(val => {
+        this.httpClient.post<IComment>(environment.api.comment.newComment, {discussionId: object, text, name}).pipe(first()).subscribe(val => {
           if (val) { resolve(val); } else { reject(); }
         });
       }

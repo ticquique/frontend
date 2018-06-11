@@ -35,7 +35,7 @@ export class UserService {
   }
 
   public updateUser = (data): Observable<IUser> => {
-    return this.httpClient.patch<IUser>(`${environment.api.user.updatePassword}`, data);
+    return this.httpClient.patch<IUser>(`${environment.api.user.updateUser}`, data);
   }
 
   public updatePassword = (data): Observable<IUser> => {

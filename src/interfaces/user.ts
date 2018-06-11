@@ -9,6 +9,8 @@ export interface IUser {
   reaction?: string;
   numComments?: number;
   privileges?: 'Member' | 'Client' | 'Owner' | 'Admin';
+  tags?: string[];
+  preferences?: string[];
   profile?: {
     picture?: {
       small?: string,
@@ -34,7 +36,12 @@ export interface IUser {
     facebook?: string,
     twitter?: string,
     google?: string,
-    stripe?: string
+    stripe?: {
+        stripe_user_id?: string,
+        refresh_token?: string,
+        access_token?: string,
+        customer_token?: string,
+    }
   };
   points?: {
     numLikes?: number,

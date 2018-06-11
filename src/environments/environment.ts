@@ -19,7 +19,11 @@ export const environment = {production: false,
       {property: 'og:type', content: 'website'},
       {property: 'og:url', content: `${env.APP_SCHEMA}://${env.APP_HOST}`},
       {property: 'og:image', content: `assets/img/og/1200x630.png`},
-    ]
+    ],
+    stripe: {
+      oauth: `https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_CRUnedV377BrvRpJwjSqEtKoq3z2uyXZ&scope=read_write`,
+      pubKey: env.STRIPE_PUB,
+    }
   },
   api: {
     url: `${env.API_URL}`,
@@ -48,8 +52,8 @@ export const environment = {production: false,
     },
     subscription: {
       getSubscription: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}subscription/`,
-      getMessages: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}subscription/`,
-      createChat: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}subscription/`,
+      createSubscription: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}subscription/`,
+      deleteSubscription: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}subscription/`,
     },
     post: {
       getPost: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}post/`,
@@ -69,6 +73,10 @@ export const environment = {production: false,
     },
     notification: {
       getNotification: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}notification/`,
+    },
+    donative: {
+      createCustomer: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}donative/`,
+      createCharge: `${env.API_URL}${env.API_PREFIX}${env.API_VERSION}donative/charge/`
     }
   }
 };

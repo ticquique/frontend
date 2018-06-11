@@ -15,5 +15,7 @@
     "notifications": "Notifications",
     "messages": "Messages",
     "settings": "Settings",
-    "logout": "Logout"
+    "logout": "Logout",
+    "Select your country": "Seleccione su país",
+    "enter your city": "Introduzca su ciudad"
 }

@@ -116,7 +116,6 @@ export class CreatePostComponent implements OnInit, OnDestroy {
   createPost(): void {
     const formData = new FormData();
     this.filesPost.forEach(val => {
-      console.log(val);
       formData.append('files', val.file);
     });
     formData.append('title', this.postText.nativeElement.textContent);

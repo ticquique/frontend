@@ -21,6 +21,9 @@ import { ImageEditorComponent } from "./components/image-editor/image-editor.com
 import { ImageUploadService } from "./components/image-editor/image-upload.service";
 import { FeedService } from "./services/feed.service";
 import { ReactionService } from "./services/reaction.service";
+import { CommentsService } from "./services/comments.service";
+import { SubscriptionService } from "./services/subscription.service";
+import { DonativeService } from "./services/donative.service";
 
 @NgModule({
     imports: [
@@ -62,6 +65,9 @@ import { ReactionService } from "./services/reaction.service";
         ImageUploadService,
         FeedService,
         ReactionService,
+        CommentsService,
+        SubscriptionService,
+        DonativeService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: AuthInterceptor,
@@ -99,6 +105,9 @@ export class SharedModule {
                 NotificationService,
                 FeedService,
                 ReactionService,
+                CommentsService,
+                SubscriptionService,
+                DonativeService,
                 {
                     provide: BROWSER_FAVICONS_CONFIG,
                     useValue: {

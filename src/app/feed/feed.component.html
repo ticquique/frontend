@@ -20,4 +20,4 @@
     </div>
   </div>
 </div>
-<welcome-form *ngIf="showWelcome" [@welcomeTrigger]='state'></welcome-form>
+<welcome-form *ngIf="showWelcome" [step]="step" [user]="user" (showWelcome)="hideWelcome()" [@welcomeTrigger]='state'></welcome-form>

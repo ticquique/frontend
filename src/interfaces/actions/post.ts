@@ -12,6 +12,7 @@ export interface IPost {
     love: number,
     fun: number
   };
+  tags?: string[];
   createdAt?: Date;
   updatedAt?: Date;
 }

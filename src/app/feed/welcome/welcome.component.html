@@ -1,41 +1,6 @@
-<div [@alertStatus]='state' *ngIf="show" class="welcome-container bg-primary w-100 position-absolute d-flex justify-content-center align-items-start" (click)="reset($event)">
+<div [@alertStatus]='state' *ngIf="show" class="welcome-container bg-primary w-100 position-absolute d-flex justify-content-center align-items-start"
+  (click)="reset($event)">
+  <changePassword-form *ngIf="step == 1" (onNext)="onNext()" (onHide)="onHide($event)"></changePassword-form>
+  <updateProfile-form *ngIf="step == 2" [user]="user" (onHide)="onHide($event)"></updateProfile-form>
 
-  <form class="welcome-form" [formGroup]="welcomeForm" (submit)="welcomeForm.valid && submit()">
-    <div class="card">
-      <div class="card-header">
-        <h6>Change default password</h6>
-      </div>
-      <div class="card-body">
-        <div class="form-group">
-          <label for="oldPassword">{{'last password' | translate}}</label>
-          <input type="password" class="form-control" aria-describedby="oldPasswordHelp" formControlName="oldPassword" name="oldPassword" [placeholder]="translatePipe.transform('enter the password sent in the email')">
-          <small id="oldPasswordHelp" class="form-text text-muted">You can find your password in the register mail.</small>
-        </div>
-        <ng-container formGroupName="matchingPasswords">
-          <div class="form-group">
-            <label for="newPassword">{{'new password' | translate}}</label>
-            <input type="password" formControlName="newPassword" name="newPassword" class="form-control" [placeholder]="translatePipe.transform('enter the new password')">
-          </div>
-          <div class="form-group">
-            <label for="rePassword">{{'repeat password' | translate}}</label>
-            <input type="password" formControlName="rePassword" class="form-control" name="rePassword" [placeholder]="translatePipe.transform('enter the new password')">
-          </div>
-        </ng-container>
-        <div [@alertStatus]="alertStatus" role="alert" *ngIf="!(welcomeForm.get('matchingPasswords').get('newPassword').pristine || welcomeForm.get('matchingPasswords').get('rePassword').pristine || welcomeForm.get('matchingPasswords').valid)"
-          class="p-2 alert alert-danger">
-          <small> {{'Passwords doesn´t match' | translate}} </small>
-        </div>
-        <div [@alertStatus]="alertStatus" *ngIf="formResult" role="alert"
-          class="p-2 alert" [ngClass]="formResult.error? 'alert-danger' : 'alert-success'">
-          <small> {{formResult.message | translate}} </small>
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="button-col d-flex justify-content-between mt-2">
-            <button type="reset" (click)="reset()" class="btn btn-block col-5 btn-primary mr-3" role="button">cancel</button>
-            <button type="submit" [ngClass]="{'disabled': !welcomeForm.valid}" class="btn btn-block col-5 btn-primary m-0" role="button">submit</button>
-        </div>
-      </div>
-    </div>
-  </form>
 </div>

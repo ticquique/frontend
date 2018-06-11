@@ -19,6 +19,7 @@ export class SubscriptionService {
     private userService: UserService
   ) {
     userService.user.subscribe(user => {
+      this.user = user;
       if (user) {
         this.addListeners();
       } else {
@@ -40,7 +41,22 @@ export class SubscriptionService {
       if (find.populate) { searchArray.push(`populate=${find.populate}`); }
       searchString = `?${searchArray.join('&')}`;
     }
-    return this.httpClient.get<ISubscription[]>(`${environment.api.chat.getChats}${searchString}`);
+    return this.httpClient.get<ISubscription[]>(`${environment.api.subscription.getSubscription}${searchString}`);
+  }
+
+  public createSubscription = (subscribable: string) => {
+    this.httpClient.post<ISubscription>(`${environment.api.subscription.createSubscription}`, {subscribable, populate: 'subscribable'}).subscribe(newSubscription => {
+        const oldSubscribeds = this.subscribeds.getValue().find(val => val.id === newSubscription.id);
+        if (oldSubscribeds !== undefined) {
+          const old = this.subscribeds.getValue();
+          old.splice(old.indexOf(oldSubscribeds), 1);
+          this.subscribeds.next(old);
+        } else {
+          const newSubscribeds = this.subscribeds.getValue();
+          newSubscribeds.unshift(newSubscription);
+          this.subscribeds.next(newSubscribeds);
+        }
+    });
   }
 
   private addListeners(): void {

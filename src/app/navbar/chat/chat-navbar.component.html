@@ -8,7 +8,7 @@
       </div>
       <div class="card-body">
         <ng-container *ngIf="newConversation || this.conversationList.length === 0; else listConversations">
-          <form [formGroup]="newChat" (submit)="newChat.valid && newUsers.length > 0 && submit()">
+          <form [formGroup]="newChat" #submitable>
             <div class="form-group newconversation-username">
               <div class="users-container container">
                 <div class="row">
@@ -39,8 +39,8 @@
               </div>
             </div>
             <div class="form-group newconversation-message">
-              <input type="text" class="form-control" formControlName="message" name="message" placeholder="Message" required>
-              <button class="btn icon fas fa-paper-plane" tabindex="0"></button>
+              <input type="text" (keyup.enter)="newChat.valid && newUsers.length > 0 && submit()" class="form-control" formControlName="message" name="message" placeholder="Message" required>
+              <!-- <button class="btn icon fas fa-paper-plane" tabindex="0"></button> -->
             </div>
           </form>
         </ng-container>

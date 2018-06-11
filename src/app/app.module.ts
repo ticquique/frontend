@@ -27,7 +27,7 @@ import { SinglePostComponent } from './single-post/single-post.component';
     ChatFooterComponent,
     SettingsComponent,
     ProfileComponent,
-    SinglePostComponent
+    SinglePostComponent,
   ],
   imports: [
     BrowserModule,

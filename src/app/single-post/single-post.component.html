@@ -42,16 +42,22 @@
             <a [routerLink]="[ '/profile', post.author.username ]">
               <h5>{{post.author.username}}</h5>
             </a>
-            <button type="button" class="btn btn-dark" *ngIf="!post.author.profile.stripe && user.id !== post.author.id">Subscribe</button>
-            <div class="btn-group" role="group" *ngIf="post.author.profile.stripe && user.id !== post.author.id">
+            <button type="button" class="btn btn-dark" (click)="subscribe(post.author.id)" *ngIf="!post.author.profile.stripe && post.author.id !== user?.id">
+              <ng-container *ngIf="isSubscribed(post.author?.id); else noSubscribedTemplate">Unsubscribe</ng-container>
+              <ng-template #noSubscribedTemplate>Subscribe</ng-template>
+            </button>
+            <div class="btn-group" role="group" *ngIf="post.author.profile.stripe && post.author.id !== user?.id">
               <button type="button" class="btn btn-light">Donate</button>
-              <button type="button" class="btn btn-dark">Subscribe</button>
+              <button type="button" class="btn btn-dark" (click)="subscribe(post.author.id)">
+                <ng-container *ngIf="isSubscribed(post.author?.id); else noSubscribedTemplate">Unsubscribe</ng-container>
+                <ng-template #noSubscribedTemplate>Subscribe</ng-template>
+              </button>
             </div>
           </div>
           <div class="post-reactions fa-2x ml-auto">
 
-            <span class="fa-layers fa-fw reaction-icons" [class.inverse]="selfReaction && selfReaction.type === 'like'" tabindex="0" (keydown.enter)="react(post.id, 'like')"
-              (click)="react(post.id, 'like')">
+            <span class="fa-layers fa-fw reaction-icons" [class.inverse]="selfReaction && selfReaction.type === 'like'" tabindex="0"
+              (keydown.enter)="react(post.id, 'like')" (click)="react(post.id, 'like')">
               <i class="fas fa-circle reaction-inner-wrapper"></i>
               <i class="far fa-thumbs-up reaction-inner-icon" data-fa-transform="shrink-6"></i>
               <span class="fa-layers-counter reaction-inner-counter" *ngIf="post.reactions?.like">{{post.reactions?.like}}</span>
@@ -73,10 +79,19 @@
           </ul>
           <div class="tab-content" id="post-tabs-content">
             <div class="tab-pane fade show active" id="comments" role="tabpanel" aria-labelledby="comments-tab">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius saepe, rem sint nihil, inventore eligendi unde aperiam officiis
-              deserunt ipsam quae esse, voluptatibus itaque ex quia facilis. Pariatur, illum fugit!Repellat odit tenetur
-              harum laborum eligendi tempore totam natus facilis et molestiae, fuga esse labore nihil cumque cupiditate,
-              eaque enim alias ut optio adipisci, aliquid corrupti at inventore veniam. Debitis.
+              <p *ngFor="let comment of comments?.comments">
+                <li class="media">
+                  <div class="media-body reaction-type d-flex justify-content-around align-items-center">
+                    <a class="comment-profile-image" [routerLink]="[ '/profile', comment.author.name ]">
+                      <h6>{{comment.author.name}}</h6>
+                    </a>
+                    <p>
+                      {{comment.text}}
+                    </p>
+                  </div>
+                </li>
+                <!-- {{comment | json}} -->
+              </p>
             </div>
             <div class="tab-pane fade" id="reactions" role="tabpanel" aria-labelledby="reactions-tab">
               <ul class="list-unstyled" *ngFor="let reaction of reactions">
@@ -95,6 +110,17 @@
                   </div>
                 </li>
               </ul>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-3" *ngIf="user">
+          <div class="input-group position-relative" >
+            <input type="text" spellcheck="true" (keyup.enter)="sendComment(post.id)" autocomplete="off"
+            class="form-control comment-input" [(ngModel)]="postComment" placeholder="Inserta tu comentario">
+            <div class="input-group-append suffix" (click)="sendComment(post.id)">
+              <span class="input-group-text" tabindex="0">
+                <i class="far fa-paper-plane" data-fa-transform="rotate-45"></i>
+              </span>
             </div>
           </div>
         </div>

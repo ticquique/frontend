@@ -58,11 +58,33 @@
       </div>
     </div>
     <div class="row" *ngIf="action">
+      <div class="col-10 offset-1" *ngIf="comments && comments?.comments?.length">
+        <div class="row">
+          <div class="col-11 ml-2" *ngFor="let comment of comments.comments; let i=index">
+            <li class="media" *ngIf="i < commentsLimit">
+              <div class="media-body reaction-type d-flex align-items-center">
+                <a class="comment-profile-image" [routerLink]="[ '/profile', comment.author.name ]">
+                  <h6>{{comment.author.name}}</h6>
+                </a>
+                <h6 class="ml-3">
+                  {{comment.text}}
+                </h6>
+              </div>
+            </li>
+          </div>
+          <div class="col-11 ml-2" *ngIf="commentsLimit < comments.comments.length">
+            <button type="button" (click)="commentsLimit = commentsLimit + 2" class="btn btn-sm">
+                show more
+            </button>
+          </div>
+        </div>
+      </div>
       <div class="col-10 offset-1">
         <div class="input-group position-relative">
-          <input type="text" spellcheck="true" autocomplete="off" class="form-control comment-input" placeholder="Inserta tu comentario">
-          <div class="input-group-append suffix">
-            <span class="input-group-text">
+          <input type="text" spellcheck="true" (keyup.enter)="sendComment(post.id)" autocomplete="off" class="form-control comment-input"
+            [(ngModel)]="postComment" placeholder="Inserta tu comentario">
+          <div class="input-group-append suffix" (click)="sendComment(post.id)">
+            <span class="input-group-text" tabindex="0">
               <i class="far fa-paper-plane" data-fa-transform="rotate-45"></i>
             </span>
           </div>

@@ -1,9 +1,10 @@
 import { OnInit, Component, Input, ViewChild, ElementRef } from "@angular/core";
 import { state, style, animate, transition, trigger } from "@angular/animations";
-import { IAction, IPost, IUser, IReaction } from "../../../interfaces";
+import { IAction, IPost, IUser, IReaction, IComment } from "../../../interfaces";
 import { ReactionService } from "../../shared/services/reaction.service";
 import { DomSanitizer } from "@angular/platform-browser";
 import { CommentsService } from "../../shared/services/comments.service";
+import { first } from "rxjs/operators";
 
 @Component({
   selector: 'single-post',
@@ -26,6 +27,9 @@ export class PostComponent implements OnInit {
   @ViewChild("dislikeWrapper", { read: ElementRef }) dislikeWrapper: ElementRef;
   @ViewChild("likeIcon", { read: ElementRef }) likeIcon: ElementRef;
   @ViewChild("dislikeIcon", { read: ElementRef }) dislikeIcon: ElementRef;
+  postComment: string;
+  comments: IComment;
+  commentsLimit = 2;
   state: string;
   reaction: 'like' | 'dislike' | 'love' | 'fun' | '';
 
@@ -37,6 +41,9 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.state = 'enter';
+    this.showComments(this.post.id).then(val => {
+      if (val.length) { this.comments = val[0]; }
+    }).catch(e => console.log(e));
     if (this.user) {
       this.reactionService.getReaction({ resource: `user-${this.user.id};related-${this.post.id}` }).subscribe(reactions => {
         if (reactions && reactions.length) {
@@ -44,6 +51,14 @@ export class PostComponent implements OnInit {
         }
       });
     }
+  }
+
+  public showComments(id: string): Promise<IComment[]> {
+    return new Promise<IComment[]>((resolve, reject) => {
+      this.commentsService.getComment({ resource: `discussionId-${id}` }).pipe(first()).subscribe(val => {
+        if (val && val.length) { resolve(val) } else { reject() }
+      })
+    });
   }
 
   public react(related: string, type: 'like' | 'dislike' | 'love' | 'fun') {
@@ -66,9 +81,12 @@ export class PostComponent implements OnInit {
     }
   }
 
-  public sendComment(object: string, text: string): void {
-    if (this.user) {
-      this.commentsService.createComment(object, text, this.user.username);
+  public sendComment(object: string): void {
+    if (this.user && this.postComment.length) {
+      this.commentsService.createComment(object, this.postComment, this.user.username).then(val => {
+        this.comments.comments.unshift(val);
+        this.postComment = '';
+      }).catch(e => console.log(e));
     }
   }
 

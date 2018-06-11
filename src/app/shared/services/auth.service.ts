@@ -24,7 +24,7 @@ export class AuthService {
       if (val.token) {
         this.validateUser(val.token).pipe(first()).subscribe(token => {
           this.storeUserData(token, true);
-          this.router.navigate(['welcome']);
+          this.router.navigate([''], {queryParams: {showWelcome: 'true'}});
         });
       }
     });

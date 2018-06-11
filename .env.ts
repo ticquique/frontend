@@ -12,3 +12,6 @@ export const API_SUCCESS = 200;
 export const API_VERSION = 'v1/';
 export const API_URL = 'https://localhost:3333/';
 export const API_PREFIX = 'api/';
+
+// STRIPE PUBLIC KEY
+export const STRIPE_PUB = 'pk_test_AMxea18iwrKVvnyOAsqOcR2c';

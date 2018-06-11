@@ -1,5 +1,7 @@
+import { IUser } from ".";
+
 export interface ISubscription {
     id?: string;
-    subscriber?: string;
-    subscribable?: string;
+    subscriber?:  IUser;
+    subscribable?: IUser;
 }

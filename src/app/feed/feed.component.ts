@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { UserService } from '../shared/services/user.service';
 import { IUser, IFeed, IPost } from '../../interfaces';
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -9,6 +9,7 @@ import { LoaderService } from '../shared/services/loader.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { FeedService } from '../shared/services/feed.service';
+import { DonativeService } from '../shared/services/donative.service';
 
 interface FilePost {
   src: string;
@@ -36,11 +37,14 @@ export class FeedComponent implements OnInit {
   destroy$: Subject<boolean> = new Subject<boolean>();
   feed: IFeed;
   postList: IPost[];
+  step = 1;
 
   constructor(
     private router: Router,
     private userService: UserService,
-    private feedService: FeedService
+    private feedService: FeedService,
+    private route: ActivatedRoute,
+    private donativeService: DonativeService
   ) { }
 
   ngOnInit(): void {
@@ -56,19 +60,39 @@ export class FeedComponent implements OnInit {
   private addListeners() {
     this.userService.user.pipe(takeUntil(this.destroy$)).subscribe(user => {
       if (user) {
+        this.user = user;
         this.feedService.feed.pipe(takeUntil(this.destroy$)).subscribe(feed => {
           this.feed = feed;
           if (feed && feed.actions) {
             this.postList = feed.actions.map(action => action.object);
           }
         });
-        this.user = user;
-        if (this.router.url === '/welcome') { this.showWelcome = true; }
+        this.route.queryParams.subscribe(val => {
+          if (val.scope && val.code) {
+            this.donativeService.createCustomer(val.code, val.scope).subscribe(val => {
+              this.userService.user.next(val);
+            });
+          }
+          if (val.step || val.showWelcome) {
+            if (val.showWelcome) {
+              this.showWelcome = (val['showWelcome'] === 'true');
+            }
+            if (val.step) {
+              this.showWelcome = true;
+              this.step = val['step'];
+            }
+            this.router.navigate(['/']);
+          }
+        });
       } else {
-        this.feedService.getPost({page: 1, perPage: 50, populate: 'attachments,author'}).pipe(takeUntil(this.destroy$)).subscribe(postList => {
+        this.feedService.getPost({ page: 1, perPage: 50, populate: 'attachments,author' }).pipe(takeUntil(this.destroy$)).subscribe(postList => {
           this.postList = postList;
         });
       }
     });
+  }
+
+  public hideWelcome() {
+    this.showWelcome = false;
   }
 }

@@ -8,6 +8,8 @@ import { FeedRoutingModule } from './feed-routing.module';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { CreatePostComponent } from './create-post/create-post.component';
 import { PostComponent } from './post/post.component';
+import { UpdateProfileComponent } from './welcome/updateProfile/updateProfile.component';
+import { ChangePasswordComponent } from './welcome/changePassword/changePassword.component';
 
 @NgModule({
     imports: [
@@ -20,7 +22,9 @@ import { PostComponent } from './post/post.component';
         FeedComponent,
         WelcomeComponent,
         CreatePostComponent,
-        PostComponent
+        PostComponent,
+        UpdateProfileComponent,
+        ChangePasswordComponent
     ],
     providers: []
 })

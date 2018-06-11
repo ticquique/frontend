@@ -28,5 +28,7 @@
     "search": "Buscar",
     "notifications": "Notificaciones",
     "messages": "Mensajes",
-    "logout": "Cerrar sesión"
+    "logout": "Cerrar sesión",
+    "Select your country": "Seleccione su país",
+    "enter your city": "Introduzca su ciudad"
 }

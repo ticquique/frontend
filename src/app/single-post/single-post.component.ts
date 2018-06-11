@@ -1,12 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { trigger, state, style, transition, animate } from "@angular/animations";
-import { IUser, IPost, IReaction } from "../../interfaces";
+import { IUser, IPost, IReaction, ISubscription, IComment } from "../../interfaces";
 import { Subject } from "rxjs";
 import { Router, ActivatedRoute, ParamMap } from "@angular/router";
 import { UserService } from "../shared/services/user.service";
 import { FeedService } from "../shared/services/feed.service";
 import { takeUntil, switchMap, first } from "rxjs/operators";
 import { ReactionService } from "../shared/services/reaction.service";
+import { SubscriptionService } from "../shared/services/subscription.service";
+import { CommentsService } from "../shared/services/comments.service";
 
 @Component({
   selector: 'single-post',
@@ -28,13 +30,18 @@ export class SinglePostComponent implements OnInit {
   post: IPost;
   selfReaction: IReaction;
   reactions: IReaction[];
+  comments: IComment;
   destroy$: Subject<boolean> = new Subject<boolean>();
+  subscribeds: ISubscription[];
+  postComment: string;
 
   constructor(
     private userService: UserService,
     private feedService: FeedService,
     private route: ActivatedRoute,
-    private reactionService: ReactionService
+    private reactionService: ReactionService,
+    private subscriptionService: SubscriptionService,
+    private commentsService: CommentsService
   ) { }
 
   ngOnInit(): void {
@@ -51,15 +58,16 @@ export class SinglePostComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
 
       this.userService.user.pipe(takeUntil(this.destroy$)).subscribe(user => {
-        if (user) {
-          this.user = user;
-        }
+        this.user = user;
         this.feedService.getPost({ resource: `_id-${params.get('id')}`, populate: 'attachments,author,comments' })
           .pipe(first())
           .toPromise()
           .then(post => {
             if (post.length) {
               this.post = post[0];
+              this.showComments(this.post.id).then(val => {
+                if (val.length) { this.comments = val[0]; }
+              }).catch(e => console.log(e));
               this.reactionService.getReaction({ resource: `related-${this.post.id}`, populate: 'user' })
                 .pipe(first())
                 .toPromise()
@@ -69,9 +77,12 @@ export class SinglePostComponent implements OnInit {
                     const reaction = this.reactions.find(val => val.user.id === this.user.id);
                     if (reaction) { this.selfReaction = reaction; }
                   }
-                }).catch(error => console.log(error))
+                }).catch(error => console.log(error));
             }
           }).catch(e => console.log(e));
+        if (this.user) {
+          this.subscriptionService.subscribeds.subscribe(val => this.subscribeds = val);
+        }
       });
 
     });
@@ -91,13 +102,42 @@ export class SinglePostComponent implements OnInit {
           postReactions[type] = postReactions[type] + 1;
           this.selfReaction.type = type;
           this.reactions = this.reactions.filter(val => val.user.id !== this.user.id);
-          this.reactions.push({reference: 'Post', related: this.post.id, type, user: this.user});
+          this.reactions.push({ reference: 'Post', related: this.post.id, type, user: this.user });
         }
       } else {
         postReactions[type] = postReactions[type] + 1;
         this.selfReaction.type = type;
-        this.reactions.push({reference: 'Post', related: this.post.id, type, user: this.user});
+        this.reactions.push({ reference: 'Post', related: this.post.id, type, user: this.user });
       }
     }
+  }
+
+  public showComments(id: string): Promise<IComment[]> {
+    return new Promise<IComment[]>((resolve, reject) => {
+      this.commentsService.getComment({ resource: `discussionId-${id}` }).pipe(first()).subscribe(val => {
+        if (val && val.length) { resolve(val) } else { reject() }
+      })
+    });
+  }
+
+
+  public sendComment(object: string): void {
+    if (this.user && this.postComment.length) {
+      this.commentsService.createComment(object, this.postComment, this.user.username).then(val => {
+        this.comments.comments.unshift(val);
+        this.postComment = '';
+      }).catch(e => console.log(e));
+    }
+  }
+
+
+  public subscribe(id: string) {
+    if (this.user) {
+      this.subscriptionService.createSubscription(id);
+    }
+  }
+
+  public isSubscribed(id: string): boolean {
+    return (this.subscribeds && this.subscribeds.find(val => val.subscribable.id === id) !== undefined);
   }
 }
